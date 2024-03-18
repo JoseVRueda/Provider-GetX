@@ -1,4 +1,6 @@
+import 'package:f_getxstate_demo/ui/providers/count_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Page2 extends StatelessWidget {
   const Page2({super.key});
@@ -10,12 +12,20 @@ class Page2 extends StatelessWidget {
         title: const Text('Page 2'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Value'),
-            ElevatedButton(onPressed: null, child: Text('Increment'))
+            Consumer<CountProvider>(
+              builder: (context, value, child) {
+                return Text(value.value.toString());
+              },
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Provider.of<CountProvider>(context, listen: false).increment();
+                },
+                child: Text('Increment'))
           ],
         ),
       ),
